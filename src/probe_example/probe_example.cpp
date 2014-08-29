@@ -1,10 +1,12 @@
 #include <ed/io/transport/probe_client.h>
 #include <sstream>
 
+#include <geolib/Shape.h>
+
 int main(int argc, char **argv) {
 
     ed::ProbeClient client;
-    client.launchProbe("example_probe", "/home/sdries/ros/hydro/dev/devel/lib/libed_example_probe.so");
+    client.launchProbe("example_probe", "/home/ramon/dev_ws/devel/lib/libed_example_probe.so");
 
     for(int i = 0; i < 10; ++i)
     {
@@ -20,15 +22,13 @@ int main(int argc, char **argv) {
 
         if (client.process(req, res))
         {
-            int sum;
-            res >> sum;
+            int total;
+            res >> total;
+            std::cout << "Total of " << total << " shapes." << std::endl;
 
-            std::cout << i1 << " + " << i2 << " = " << sum << std::endl;
+            geo::ShapePtr shape = geo::Shape::read(res.stream());
 
-            std::string message;
-            res >> message;
 
-            std::cout << message << std::endl;
         }
         else
         {

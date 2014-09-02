@@ -1,16 +1,16 @@
-#ifndef ED_EXAMPLES_PROBE_EXAMPLE_PROBE_H_
-#define ED_EXAMPLES_PROBE_EXAMPLE_PROBE_H_
+#ifndef ED_EXAMPLES_SHAPE_PROBE_H_
+#define ED_EXAMPLES_SHAPE_PROBE_H_
 
 #include <ed/io/transport/probe.h>
 
-class ExampleProbe : public ed::Probe
+class ShapeProbe : public ed::Probe
 {
 
 public:
 
-    ExampleProbe();
+    ShapeProbe();
 
-    virtual ~ExampleProbe();
+    virtual ~ShapeProbe();
 
     void configure(tue::Configuration config);
 

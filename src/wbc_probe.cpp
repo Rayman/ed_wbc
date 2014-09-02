@@ -65,7 +65,7 @@ void ShapeProbe::process(const ed::WorldModel& world,
         for(unsigned int i = 0; i < triangles.size(); ++i)
         {
             const geo::TriangleI& t = triangles[i];
-            res << (float)t.i1_ << (float)t.i2_ << (float)t.i3_;
+            res << (int)t.i1_ << (int)t.i2_ << (int)t.i3_;
         }
     }
 }

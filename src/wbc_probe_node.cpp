@@ -3,7 +3,7 @@
 int main(int argc, char **argv) {
 
     ed::ProbeClient client;
-    client.launchProbe("example_shape_probe", "libed_example_shape_probe.so");
+    client.launchProbe("wbc_probe", "libwbc_probe.so");
 
     // Just for the fun of it, let the probe process 10 times
     for(int i_test = 0; i_test < 10; ++i_test)

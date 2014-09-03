@@ -20,6 +20,11 @@ include_directories(
     ${catkin_INCLUDE_DIRS}
 )
 
+# show the headers in qtcreator
+file(GLOB HEADERS
+  RELATIVE ${PROJECT_SOURCE_DIR} "include/*/*.h"
+)
+
 # ed plugin
 add_library(wbc_probe
     src/wbc_probe.cpp
@@ -38,5 +43,6 @@ target_link_libraries(wbc_probe_node ${catkin_LIBRARIES})
 add_library(wbc_ed_client
     src/ed_client.cpp
     src/serialization.cpp
+    ${HEADERS}
 )
 target_link_libraries(wbc_probe_node ${catkin_LIBRARIES})

@@ -33,7 +33,7 @@ bool serialize(const geo::Shape& shape, tue::serialization::OutputArchive& outpu
     }
 }
 
-bool serialize(const ed::WorldModel& world, tue::serialization::OutputArchive& output)
+bool serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::OutputArchive& output)
 {
     using namespace ed_wbc;
 
@@ -103,8 +103,31 @@ const boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Ar
     return boost::shared_ptr<fcl::CollisionObject>(new fcl::CollisionObject(geom));
 }
 
+void deserializeCollisionWorld(tue::serialization::Archive &input)
+{
+    // Get the number of shapes
+    int num_shapes;
+    input >> num_shapes;
+
+
+
+    std::cout << num_shapes << " shapes" << std::endl;
+    for(int i = 0; i < num_shapes; ++i)
+    {
+        // For each shape:
+        // - get the entitiy id
+        std::string entity_id;
+        input >> entity_id;
+
+        std::cout << "  - " << entity_id << ":" << std::endl;
+
+        boost::shared_ptr<fcl::CollisionObject> obj = ed_wbc::serialization::deserialize(input);
+    }
 }
 
 
+} // namespace serialization
 
-} // namespace
+
+
+} // namespace ed_wbc

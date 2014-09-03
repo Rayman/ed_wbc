@@ -28,7 +28,7 @@ void ShapeProbe::process(const ed::WorldModel& world,
 {
     using namespace ed_wbc;
 
-    serialization::serialize(world, res);
+    serialization::serializeCollisionWorld(world, res);
 }
 
 // Make sure ED can find this probe within the library

@@ -17,22 +17,9 @@ int main(int argc, char **argv) {
         // Ask the probe to process (in this case, retreive all entity shapes)
         if (client.process(req, res))
         {
-            // Get the number of shapes
-            int num_shapes;
-            res >> num_shapes;
+            using namespace ed_wbc;
 
-            std::cout << num_shapes << " shapes" << std::endl;
-            for(int i = 0; i < num_shapes; ++i)
-            {
-                // For each shape:
-                // - get the entitiy id
-                std::string entity_id;
-                res >> entity_id;
-
-                std::cout << "  - " << entity_id << ":" << std::endl;
-
-                boost::shared_ptr<fcl::CollisionObject> obj = ed_wbc::serialization::deserialize(res);
-            }
+            serialization::deserializeCollisionWorld(res);
         }
         else
         {

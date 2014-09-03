@@ -18,9 +18,11 @@ namespace serialization {
 
 bool serialize(const geo::Shape& shape, tue::serialization::OutputArchive &output);
 
-bool serialize(const ed::WorldModel& world, tue::serialization::OutputArchive& output);
+bool serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::OutputArchive& output);
 
 const boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive& input);
+
+void deserializeCollisionWorld(tue::serialization::Archive &input);
 
 }
 

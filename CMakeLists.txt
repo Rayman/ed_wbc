@@ -22,10 +22,12 @@ include_directories(
 
 add_library(wbc_probe
     src/wbc_probe.cpp
+    src/serialization.cpp
 )
 target_link_libraries(wbc_probe ${catkin_LIBRARIES})
 
 add_executable(wbc_probe_node
     src/wbc_probe_node.cpp
+    src/serialization.cpp
 )
 target_link_libraries(wbc_probe_node ${catkin_LIBRARIES})

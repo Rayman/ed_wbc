@@ -2,6 +2,7 @@
 #include <ed/world_model.h>
 #include <ed/entity.h>
 
+#include "serialization.h"
 #include <geolib/Shape.h>
 
 // ----------------------------------------------------------------------------------------------------
@@ -29,6 +30,8 @@ void ShapeProbe::process(const ed::WorldModel& world,
              tue::serialization::InputArchive& req,
              tue::serialization::OutputArchive& res)
 {
+    using namespace ed_wbc;
+
     // Loop over all world entities and find entities that have a shape
     std::vector<ed::EntityConstPtr> shape_entities;
     for(ed::WorldModel::const_iterator it = world.begin(); it != world.end(); ++it)
@@ -48,25 +51,7 @@ void ShapeProbe::process(const ed::WorldModel& world,
         // Add the id of the entity to the response
         res << e->id();
 
-        // serialize vertices
-        const std::vector<geo::Vector3>& vertices = shape->getMesh().getPoints();
-        res << (int)vertices.size();
-        for(unsigned int i = 0; i < vertices.size(); ++i)
-        {
-            const geo::Vector3& v = vertices[i];
-
-            // Explicitly cast to float (4 byte) such that we know on the receiving end that we will get floats
-            res << (float)v.x << (float)v.y << (float)v.z;
-        }
-
-        // serialize triangles
-        const std::vector<geo::TriangleI>& triangles = shape->getMesh().getTriangleIs();
-        res << (int)triangles.size();
-        for(unsigned int i = 0; i < triangles.size(); ++i)
-        {
-            const geo::TriangleI& t = triangles[i];
-            res << (int)t.i1_ << (int)t.i2_ << (int)t.i3_;
-        }
+        serialization::serialize(*shape, res.stream());
     }
 }
 

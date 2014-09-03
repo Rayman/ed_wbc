@@ -51,7 +51,7 @@ void ShapeProbe::process(const ed::WorldModel& world,
         // Add the id of the entity to the response
         res << e->id();
 
-        serialization::serialize(*shape, res.stream());
+        serialization::serialize(*shape, res);
     }
 }
 

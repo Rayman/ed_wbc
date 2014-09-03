@@ -1,19 +1,24 @@
 #ifndef SERIALIZATION_H
 #define SERIALIZATION_H
 
+#include <boost/shared_ptr.hpp>
+#include <tue/serialization/archive.h>
+#include <tue/serialization/input_archive.h>
+#include <tue/serialization/output_archive.h>
+
 #include <geolib/datatypes.h>
+
 #include <fcl/collision_object.h>
 
-#include <boost/shared_ptr.hpp>
 
 namespace ed_wbc {
 
 
 namespace serialization {
 
-bool serialize(const geo::Shape& shape, std::ostream& output);
+bool serialize(const geo::Shape& shape, tue::serialization::OutputArchive &output);
 
-const boost::shared_ptr<fcl::CollisionObject> deserialize(std::istream& input);
+const boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive& input);
 
 }
 

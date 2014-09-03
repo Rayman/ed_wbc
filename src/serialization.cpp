@@ -1,6 +1,7 @@
 #include "serialization.h"
 
 #include <geolib/Shape.h>
+#include <ed/entity.h>
 #include <fcl/BVH/BVH_model.h>
 
 namespace ed_wbc {
@@ -29,6 +30,33 @@ bool serialize(const geo::Shape& shape, tue::serialization::OutputArchive& outpu
     {
         const geo::TriangleI& t = triangles[i];
         output << (int)t.i1_ << (int)t.i2_ << (int)t.i3_;
+    }
+}
+
+bool serialize(const ed::WorldModel& world, tue::serialization::OutputArchive& output)
+{
+    using namespace ed_wbc;
+
+    // Loop over all world entities and find entities that have a shape
+    std::vector<ed::EntityConstPtr> shape_entities;
+    for(ed::WorldModel::const_iterator it = world.begin(); it != world.end(); ++it)
+    {
+        const ed::EntityConstPtr& e = it->second;
+        if (e->shape())
+            shape_entities.push_back(e);
+    }
+
+    // Add the number of entities to the response
+    output << (int)shape_entities.size();
+    for(std::vector<ed::EntityConstPtr>::const_iterator it = shape_entities.begin(); it != shape_entities.end(); ++it)
+    {
+        const ed::EntityConstPtr& e = *it;
+        geo::ShapeConstPtr shape = e->shape();
+
+        // Add the id of the entity to the response
+        output << e->id();
+
+        serialization::serialize(*shape, output);
     }
 }
 

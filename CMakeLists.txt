@@ -20,14 +20,23 @@ include_directories(
     ${catkin_INCLUDE_DIRS}
 )
 
+# ed plugin
 add_library(wbc_probe
     src/wbc_probe.cpp
     src/serialization.cpp
 )
 target_link_libraries(wbc_probe ${catkin_LIBRARIES})
 
+# test client
 add_executable(wbc_probe_node
     src/wbc_probe_node.cpp
+    src/serialization.cpp
+)
+target_link_libraries(wbc_probe_node ${catkin_LIBRARIES})
+
+# wbc library
+add_library(wbc_ed_client
+    src/ed_client.cpp
     src/serialization.cpp
 )
 target_link_libraries(wbc_probe_node ${catkin_LIBRARIES})

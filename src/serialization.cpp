@@ -10,7 +10,7 @@ namespace ed_wbc {
 
 namespace serialization {
 
-bool serialize(const geo::Shape& shape, tue::serialization::OutputArchive& output)
+void serialize(const geo::Shape& shape, tue::serialization::OutputArchive& output)
 {
     // serialize vertices
     const std::vector<geo::Vector3>& vertices = shape.getMesh().getPoints();
@@ -33,7 +33,7 @@ bool serialize(const geo::Shape& shape, tue::serialization::OutputArchive& outpu
     }
 }
 
-bool serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::OutputArchive& output)
+void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::OutputArchive& output)
 {
     using namespace ed_wbc;
 
@@ -60,7 +60,7 @@ bool serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
     }
 }
 
-const boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive &input)
+boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive &input)
 {
     std::vector<fcl::Vec3f>    vertices;
     std::vector<fcl::Triangle> triangles;

@@ -9,8 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
 # find_package(Boost REQUIRED COMPONENTS system program_options)
 
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES bla
+  INCLUDE_DIRS include
+  LIBRARIES wbc_ed_client
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )

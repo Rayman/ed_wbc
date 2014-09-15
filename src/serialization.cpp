@@ -42,11 +42,19 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
     for(ed::WorldModel::const_iterator it = world.begin(); it != world.end(); ++it)
     {
         const ed::EntityConstPtr& e = it->second;
+
+        ROS_INFO("entity %p", e.get());
+        if (!e.get()) {
+            ROS_WARN("NULL entity found");
+            continue;
+        }
+
         if (e->shape())
             shape_entities.push_back(e);
     }
 
     // Add the number of entities to the response
+    ROS_INFO("serializing %i entities", (int)shape_entities.size());
     output << (int)shape_entities.size();
     for(std::vector<ed::EntityConstPtr>::const_iterator it = shape_entities.begin(); it != shape_entities.end(); ++it)
     {

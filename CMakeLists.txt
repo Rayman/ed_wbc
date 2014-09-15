@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES wbc_ed_client
-#  CATKIN_DEPENDS other_catkin_pkg
+  CATKIN_DEPENDS ed fcl
 #  DEPENDS system_lib
 )
 

@@ -111,13 +111,11 @@ boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive 
     return boost::shared_ptr<fcl::CollisionObject>(new fcl::CollisionObject(geom));
 }
 
-void deserializeCollisionWorld(tue::serialization::Archive &input)
+void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector< boost::shared_ptr<fcl::CollisionObject> > &world)
 {
     // Get the number of shapes
     int num_shapes;
     input >> num_shapes;
-
-
 
     std::cout << num_shapes << " shapes" << std::endl;
     for(int i = 0; i < num_shapes; ++i)
@@ -130,6 +128,7 @@ void deserializeCollisionWorld(tue::serialization::Archive &input)
         std::cout << "  - " << entity_id << ":" << std::endl;
 
         boost::shared_ptr<fcl::CollisionObject> obj = ed_wbc::serialization::deserialize(input);
+        world.push_back(obj);
     }
 }
 

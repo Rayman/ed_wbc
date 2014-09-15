@@ -22,7 +22,7 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
 
 boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive &input);
 
-void deserializeCollisionWorld(tue::serialization::Archive &input);
+void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector< boost::shared_ptr<fcl::CollisionObject> > &world);
 
 }
 

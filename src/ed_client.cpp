@@ -27,7 +27,7 @@ fcl::BroadPhaseCollisionManager* EdClient::getWorld()
 
         std::vector< boost::shared_ptr<fcl::CollisionObject> > world;
         serialization::deserializeCollisionWorld(res, world);
-        ROS_INFO("got %z objects", world.size());
+        ROS_INFO("got %lu objects", world.size());
     }
     else
     {

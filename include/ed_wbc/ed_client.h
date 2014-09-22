@@ -15,6 +15,8 @@ class EdClient
 public:
     EdClient();
 
+    void initialize();
+
     fcl::BroadPhaseCollisionManager* getWorld();
 };
 

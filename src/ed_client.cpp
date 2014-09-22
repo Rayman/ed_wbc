@@ -7,7 +7,9 @@ namespace ed_wbc {
 
 
 
-EdClient::EdClient()
+EdClient::EdClient() {}
+
+void EdClient::initialize()
 {
     client_.launchProbe("wbc_probe", "libwbc_probe.so");
 }

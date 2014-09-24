@@ -4,6 +4,7 @@ project(ed_wbc)
 find_package(catkin REQUIRED COMPONENTS
   ed
   fcl
+  amigo_whole_body_controller
 )
 
 # find_package(Boost REQUIRED COMPONENTS system program_options)
@@ -31,6 +32,15 @@ add_library(wbc_probe
     src/serialization.cpp
 )
 target_link_libraries(wbc_probe ${catkin_LIBRARIES})
+
+add_executable(ed_wbc
+    src/main.cpp
+    src/edworld.cpp
+    src/ed_client.cpp
+#    src/wbc_probe.cpp
+    src/serialization.cpp
+)
+target_link_libraries(ed_wbc ${catkin_LIBRARIES})
 
 # test client
 add_executable(wbc_probe_node

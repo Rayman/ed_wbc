@@ -33,8 +33,7 @@ fcl::BroadPhaseCollisionManager* EdClient::getWorld()
     }
     else
     {
-        ROS_ERROR("probe processing failed");
-        return 0;
+        return 0; // processing failed
     }
 
     manager->setup();

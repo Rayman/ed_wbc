@@ -41,6 +41,12 @@ boost::shared_ptr<fcl::BroadPhaseCollisionManager> EdWorld::getCollisionManager(
 void EdWorld::update()
 {
     fcl::BroadPhaseCollisionManager *world = client_.getWorld();
+
+    if (!world) {
+        ROS_ERROR("probe processing failed");
+        return;
+    }
+
     ROS_INFO("ed world update: %lu entities", world->size());
     boost::shared_ptr<fcl::BroadPhaseCollisionManager> world_ptr(world);
 

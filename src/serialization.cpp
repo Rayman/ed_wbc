@@ -43,7 +43,6 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
     {
         const ed::EntityConstPtr& e = it->second;
 
-        ROS_INFO("entity %p", e.get());
         if (!e.get()) {
             ROS_WARN("NULL entity found");
             continue;
@@ -54,7 +53,6 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
     }
 
     // Add the number of entities to the response
-    ROS_INFO("serializing %i entities", (int)shape_entities.size());
     output << (int)shape_entities.size();
     for(std::vector<ed::EntityConstPtr>::const_iterator it = shape_entities.begin(); it != shape_entities.end(); ++it)
     {
@@ -100,11 +98,8 @@ boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive 
     model->addSubModel(vertices, triangles);
     model->endModel();
 
-    //delete model;
-
-    // ... or simply print the number of vertices and triangles:
-    std::cout << "      " << num_vertices << " vertices" << std::endl;
-    std::cout << "      " << num_triangles << " triangles" << std::endl;
+//    std::cout << "      " << num_vertices << " vertices" << std::endl;
+//    std::cout << "      " << num_triangles << " triangles" << std::endl;
 
     boost::shared_ptr<fcl::CollisionGeometry> geom(model);
 
@@ -117,7 +112,7 @@ void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector< 
     int num_shapes;
     input >> num_shapes;
 
-    std::cout << num_shapes << " shapes" << std::endl;
+//    std::cout << num_shapes << " shapes" << std::endl;
     for(int i = 0; i < num_shapes; ++i)
     {
         // For each shape:
@@ -125,7 +120,7 @@ void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector< 
         std::string entity_id;
         input >> entity_id;
 
-        std::cout << "  - " << entity_id << ":" << std::endl;
+//        std::cout << "  - " << entity_id << ":" << std::endl;
 
         boost::shared_ptr<fcl::CollisionObject> obj = ed_wbc::serialization::deserialize(input);
         world.push_back(obj);

@@ -29,11 +29,11 @@ fcl::BroadPhaseCollisionManager* EdClient::getWorld()
 
         std::vector< boost::shared_ptr<fcl::CollisionObject> > world;
         serialization::deserializeCollisionWorld(res, world);
-        ROS_INFO("got %lu objects", world.size());
     }
     else
     {
-        std::cout << "Probe processing failed." << std::endl;
+        ROS_ERROR("probe processing failed");
+        return 0;
     }
 
     return manager;

@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
         }
         else
         {
-            std::cout << "Probe processing failed." << std::endl;
+            ROS_ERROR("probe processing failed");
         }
     }
 

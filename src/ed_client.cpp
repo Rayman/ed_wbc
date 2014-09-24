@@ -25,16 +25,19 @@ fcl::BroadPhaseCollisionManager* EdClient::getWorld()
     // Ask the probe to process (in this case, retreive all entity shapes)
     if (client_.process(req, res))
     {
-        using namespace ed_wbc;
-
-        std::vector< boost::shared_ptr<fcl::CollisionObject> > world;
+        std::vector<serialization::WorldCollisionObject> world;
         serialization::deserializeCollisionWorld(res, world);
+        for (std::vector<serialization::WorldCollisionObject>::iterator it = world.begin(); it != world.end(); ++it) {
+            manager->registerObject(it->get());
+        }
     }
     else
     {
         ROS_ERROR("probe processing failed");
         return 0;
     }
+
+    manager->setup();
 
     return manager;
 }

@@ -16,13 +16,17 @@ namespace ed_wbc {
 
 namespace serialization {
 
+typedef boost::shared_ptr<fcl::CollisionObject> WorldCollisionObject;
+
+
+
 void serialize(const geo::Shape& shape, tue::serialization::OutputArchive &output);
 
 void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::OutputArchive& output);
 
 boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive &input);
 
-void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector< boost::shared_ptr<fcl::CollisionObject> > &world);
+void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector<WorldCollisionObject> &world);
 
 }
 

@@ -35,6 +35,7 @@ target_link_libraries(wbc_probe ${catkin_LIBRARIES})
 
 # whole body controller, configured to use the ed world model
 add_executable(ed_wbc
+  ${HEADERS}
   src/main.cpp
   src/edworldclient.cpp
   src/ed_client.cpp

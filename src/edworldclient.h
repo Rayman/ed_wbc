@@ -1,7 +1,8 @@
-#ifndef EDWORLD_H
-#define EDWORLD_H
+#ifndef EDWORLD_CLIENT_H
+#define EDWORLD_CLIENT_H
 
 #include "amigo_whole_body_controller/worldclient.h"
+#include "edworld.h"
 
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
@@ -49,4 +50,4 @@ class EdWorldClient : public WorldClient
 
 } // namespace
 
-#endif // EDWORLD_H
+#endif // EDWORLD_CLIENT_H

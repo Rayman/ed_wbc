@@ -38,6 +38,7 @@ add_executable(ed_wbc
   ${HEADERS}
   src/main.cpp
   src/edworldclient.cpp
+  src/edworld.cpp
   src/ed_client.cpp
   src/serialization.cpp
 )

@@ -1,6 +1,5 @@
 #include "edworldclient.h"
 
-#include <fcl/broadphase/broadphase_dynamic_AABB_tree.h>
 #include <ros/init.h>
 #include <ros/console.h>
 
@@ -40,18 +39,18 @@ boost::shared_ptr<World> EdWorldClient::getWorld()
 
 void EdWorldClient::update()
 {
-    std::vector< ed_wbc::CollisionObjectPtr > world;
-    if (!client_.getWorld(world)) {
+    std::vector< ed_wbc::CollisionObjectPtr > objects;
+    if (!client_.getWorld(objects)) {
         ROS_ERROR("probe processing failed");
         return;
     }
 
-    ROS_INFO("ed world update: %lu entities", world.size());
+    ROS_INFO("ed world update: %lu entities", objects.size());
 
-    // TODO: create a new world object
+    EdWorld *world = new EdWorld;
 
     boost::lock_guard<boost::mutex> lock(mutex_);
-    //world_ = world_ptr;
+    world_ = boost::shared_ptr<World>(static_cast<World*>(world));
 }
 
 } // namespace

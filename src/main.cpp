@@ -1,5 +1,5 @@
 #include <amigo_whole_body_controller/wbc_node.h>
-#include "edworld.h"
+#include "edworldclient.h"
 
 int main(int argc, char **argv) {
 
@@ -9,8 +9,9 @@ int main(int argc, char **argv) {
     ros::Rate loop_rate(50);
     wbc::WholeBodyControllerNode wbcEdNode(loop_rate);
 
-    wbc::EdWorld world;
-	wbcEdNode.setCollisionWorld(&world);
+    wbc::EdWorldClient world;
+    wbc::WorldClient *c = &world;
+    wbcEdNode.setCollisionWorld(c);
 
     StatsPublisher sp;
     sp.initialize();

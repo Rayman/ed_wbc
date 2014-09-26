@@ -1,7 +1,7 @@
 #ifndef EDWORLD_H
 #define EDWORLD_H
 
-#include "amigo_whole_body_controller/world.h"
+#include "amigo_whole_body_controller/worldclient.h"
 
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
@@ -11,17 +11,17 @@
 
 namespace wbc {
 
-class EdWorld : public World
+class EdWorldClient : public WorldClient
 {
   public:
 
-    EdWorld();
+    EdWorldClient();
 
     void initialize();
 
     void start();
 
-    boost::shared_ptr<fcl::BroadPhaseCollisionManager> getCollisionManager();
+    World* getWorld();
 
   protected:
 

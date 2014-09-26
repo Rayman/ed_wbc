@@ -1,4 +1,4 @@
-#include "edworld.h"
+#include "edworldclient.h"
 
 #include <fcl/broadphase/broadphase_dynamic_AABB_tree.h>
 #include <ros/init.h>
@@ -6,19 +6,19 @@
 
 namespace wbc {
 
-EdWorld::EdWorld() :
+EdWorldClient::EdWorldClient() :
     rate_(5)
 {
 
 }
 
-void EdWorld::initialize()
+void EdWorldClient::initialize()
 {
     client_.initialize();
     update();
 }
 
-void EdWorld::loop()
+void EdWorldClient::loop()
 {
     while (ros::ok())
     {
@@ -27,18 +27,18 @@ void EdWorld::loop()
     }
 }
 
-void EdWorld::start()
+void EdWorldClient::start()
 {
-    thread_ = boost::thread(&EdWorld::loop, this);
+    thread_ = boost::thread(&EdWorldClient::loop, this);
 }
 
-boost::shared_ptr<fcl::BroadPhaseCollisionManager> EdWorld::getCollisionManager()
+World* EdWorldClient::getWorld()
 {
     boost::lock_guard<boost::mutex> lock(mutex_);
-    return world_;
+    return 0; // todo return a world
 }
 
-void EdWorld::update()
+void EdWorldClient::update()
 {
     fcl::BroadPhaseCollisionManager *world = client_.getWorld();
 

@@ -32,10 +32,10 @@ void EdWorldClient::start()
     thread_ = boost::thread(&EdWorldClient::loop, this);
 }
 
-World* EdWorldClient::getWorld()
+boost::shared_ptr<World> EdWorldClient::getWorld()
 {
     boost::lock_guard<boost::mutex> lock(mutex_);
-    return 0; // todo return a world
+    return world_;
 }
 
 void EdWorldClient::update()
@@ -47,7 +47,8 @@ void EdWorldClient::update()
     }
 
     ROS_INFO("ed world update: %lu entities", world.size());
-    //boost::shared_ptr<fcl::BroadPhaseCollisionManager> world_ptr(world);
+
+    // TODO: create a new world object
 
     boost::lock_guard<boost::mutex> lock(mutex_);
     //world_ = world_ptr;

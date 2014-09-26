@@ -19,24 +19,30 @@ class EdWorldClient : public WorldClient
 
     void initialize();
 
+    /** starts the world model update loop in a thread **/
     void start();
 
-    World* getWorld();
+    /** get a fast copy of the current state of the world **/
+    boost::shared_ptr<World> getWorld();
 
   protected:
 
     ros::Rate rate_;
 
+    /** runs update() with rate_ hz **/
     void loop();
 
+    /** asks ed for a world model update **/
     void update();
 
     boost::thread thread_;
 
     boost::mutex mutex_;
 
-    boost::shared_ptr<fcl::BroadPhaseCollisionManager> world_;
+    /** cached state of the world **/
+    boost::shared_ptr< World > world_;
 
+    /** connection to ed **/
     ed_wbc::EdClient client_;
 
 };

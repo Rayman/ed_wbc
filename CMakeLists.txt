@@ -11,14 +11,14 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES wbc_ed_client
+  # LIBRARIES
   CATKIN_DEPENDS ed fcl
 #  DEPENDS system_lib
 )
 
 include_directories(
-    include
-    ${catkin_INCLUDE_DIRS}
+  include
+  ${catkin_INCLUDE_DIRS}
 )
 
 # show the headers in qtcreator
@@ -28,31 +28,24 @@ file(GLOB HEADERS
 
 # ed plugin
 add_library(wbc_probe
-    src/wbc_probe.cpp
-    src/serialization.cpp
+  src/wbc_probe.cpp
+  src/serialization.cpp
 )
 target_link_libraries(wbc_probe ${catkin_LIBRARIES})
 
+# whole body controller, configured to use the ed world model
 add_executable(ed_wbc
-    src/main.cpp
-    src/edworld.cpp
-    src/ed_client.cpp
-#    src/wbc_probe.cpp
-    src/serialization.cpp
+  src/main.cpp
+  src/edworldclient.cpp
+  src/ed_client.cpp
+  src/serialization.cpp
 )
 target_link_libraries(ed_wbc ${catkin_LIBRARIES})
 
 # test client
 add_executable(wbc_probe_node
-    src/wbc_probe_node.cpp
-    src/serialization.cpp
+  src/wbc_probe_node.cpp
+  src/serialization.cpp
 )
 target_link_libraries(wbc_probe_node ${catkin_LIBRARIES})
 
-# wbc library
-add_library(wbc_ed_client
-    src/ed_client.cpp
-    src/serialization.cpp
-    ${HEADERS}
-)
-target_link_libraries(wbc_probe_node ${catkin_LIBRARIES})

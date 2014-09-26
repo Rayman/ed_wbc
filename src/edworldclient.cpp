@@ -40,18 +40,17 @@ World* EdWorldClient::getWorld()
 
 void EdWorldClient::update()
 {
-    fcl::BroadPhaseCollisionManager *world = client_.getWorld();
-
-    if (!world) {
+    std::vector< ed_wbc::CollisionObjectPtr > world;
+    if (!client_.getWorld(world)) {
         ROS_ERROR("probe processing failed");
         return;
     }
 
-    ROS_INFO("ed world update: %lu entities", world->size());
-    boost::shared_ptr<fcl::BroadPhaseCollisionManager> world_ptr(world);
+    ROS_INFO("ed world update: %lu entities", world.size());
+    //boost::shared_ptr<fcl::BroadPhaseCollisionManager> world_ptr(world);
 
     boost::lock_guard<boost::mutex> lock(mutex_);
-    world_ = world_ptr;
+    //world_ = world_ptr;
 }
 
 } // namespace

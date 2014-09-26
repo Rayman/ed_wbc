@@ -1,12 +1,12 @@
 #ifndef EDCLIENT_H
 #define EDCLIENT_H
 
-#include <fcl/broadphase/broadphase.h>
 #include <ed/io/transport/probe_client.h>
+#include <fcl/collision_object.h>
 
 namespace ed_wbc {
 
-
+typedef boost::shared_ptr< fcl::CollisionObject > CollisionObjectPtr;
 
 class EdClient
 {
@@ -17,7 +17,7 @@ public:
 
     void initialize();
 
-    fcl::BroadPhaseCollisionManager* getWorld();
+    bool getWorld(std::vector< CollisionObjectPtr > &world);
 };
 
 

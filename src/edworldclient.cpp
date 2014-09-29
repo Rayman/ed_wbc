@@ -47,7 +47,7 @@ void EdWorldClient::update()
 
     ROS_INFO("ed world update: %lu entities", objects.size());
 
-    EdWorld *world = new EdWorld;
+    EdWorld *world = new EdWorld(objects);
 
     boost::lock_guard<boost::mutex> lock(mutex_);
     world_ = boost::shared_ptr<World>(static_cast<World*>(world));

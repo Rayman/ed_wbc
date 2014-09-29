@@ -10,8 +10,7 @@ int main(int argc, char **argv) {
     wbc::WholeBodyControllerNode wbcEdNode(loop_rate);
 
     wbc::EdWorldClient world;
-    wbc::WorldClient *c = &world;
-    wbcEdNode.setCollisionWorld(c);
+    wbcEdNode.setCollisionWorld(static_cast<wbc::WorldClient*>(&world));
 
     StatsPublisher sp;
     sp.initialize();

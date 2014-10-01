@@ -41,7 +41,7 @@ class EdWorldClient : public WorldClient
     boost::mutex mutex_;
 
     /** cached state of the world **/
-    boost::shared_ptr< World > world_;
+    boost::shared_ptr< EdWorld > world_;
 
     /** connection to ed **/
     ed_wbc::EdClient client_;

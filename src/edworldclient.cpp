@@ -50,7 +50,7 @@ void EdWorldClient::update()
     EdWorld *world = new EdWorld(objects);
 
     boost::lock_guard<boost::mutex> lock(mutex_);
-    world_ = boost::shared_ptr<World>(static_cast<World*>(world));
+    world_ = boost::shared_ptr<EdWorld>(world);
 }
 
 } // namespace

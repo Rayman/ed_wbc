@@ -3,12 +3,14 @@
 #include <ros/init.h>
 #include <ros/console.h>
 
+#include <amigo_whole_body_controller/conversions.h>
+
 namespace wbc {
 
 EdWorldClient::EdWorldClient() :
-    rate_(5)
+    rate_(5), private_nh_("~")
 {
-
+    marker_pub = private_nh_.advertise<visualization_msgs::Marker>("ed_world", 1);
 }
 
 void EdWorldClient::initialize()
@@ -47,8 +49,18 @@ void EdWorldClient::update()
 
     ROS_INFO("ed world update: %lu entities", objects.size());
 
+    // visualize the collision world
+    if (marker_pub.getNumSubscribers() > 0) {
+        for (std::vector< ed_wbc::CollisionObjectPtr >::const_iterator it = objects.begin(); it != objects.end(); ++it) {
+            visualization_msgs::Marker triangle_list;
+            wbc::objectFCLtoMarker(**it, triangle_list);
+            marker_pub.publish(triangle_list);
+        }
+    }
+
     EdWorld *world = new EdWorld(objects);
 
+    // lock and swap pointers
     boost::lock_guard<boost::mutex> lock(mutex_);
     world_ = boost::shared_ptr<EdWorld>(world);
 }

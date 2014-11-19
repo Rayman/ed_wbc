@@ -66,7 +66,7 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
     }
 }
 
-boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive &input)
+boost::shared_ptr<fcl::CollisionGeometry> deserialize(tue::serialization::Archive &input)
 {
     std::vector<fcl::Vec3f>    vertices;
     std::vector<fcl::Triangle> triangles;
@@ -101,9 +101,7 @@ boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive 
 //    std::cout << "      " << num_vertices << " vertices" << std::endl;
 //    std::cout << "      " << num_triangles << " triangles" << std::endl;
 
-    boost::shared_ptr<fcl::CollisionGeometry> geom(model);
-
-    return boost::shared_ptr<fcl::CollisionObject>(new fcl::CollisionObject(geom));
+    return boost::shared_ptr<fcl::CollisionGeometry>(model);
 }
 
 void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector<WorldCollisionObject> &world)
@@ -122,7 +120,9 @@ void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector<W
 
 //        std::cout << "  - " << entity_id << ":" << std::endl;
 
-        boost::shared_ptr<fcl::CollisionObject> obj = ed_wbc::serialization::deserialize(input);
+        boost::shared_ptr<fcl::CollisionGeometry> geom = ed_wbc::serialization::deserialize(input);
+
+        boost::shared_ptr<fcl::CollisionObject> obj(new fcl::CollisionObject(geom));
         world.push_back(obj);
     }
 }

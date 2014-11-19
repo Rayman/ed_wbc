@@ -24,7 +24,7 @@ void serialize(const geo::Shape& shape, tue::serialization::OutputArchive &outpu
 
 void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::OutputArchive& output);
 
-boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive &input);
+boost::shared_ptr<fcl::CollisionGeometry> deserialize(tue::serialization::Archive &input);
 
 void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector<WorldCollisionObject> &world);
 

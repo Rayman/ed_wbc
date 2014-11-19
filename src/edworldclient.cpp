@@ -51,10 +51,20 @@ void EdWorldClient::update()
 
     // visualize the collision world
     if (marker_pub.getNumSubscribers() > 0) {
+        int id = 0;
         for (std::vector< ed_wbc::CollisionObjectPtr >::const_iterator it = objects.begin(); it != objects.end(); ++it) {
-            visualization_msgs::Marker triangle_list;
-            wbc::objectFCLtoMarker(**it, triangle_list);
-            marker_pub.publish(triangle_list);
+            visualization_msgs::Marker m;
+            wbc::objectFCLtoMarker(**it, m);
+
+            m.id = ++id;
+            m.header.frame_id = "/map";
+
+            m.color.a = 0.5;
+            m.color.r = 0;
+            m.color.g = 0;
+            m.color.b = 1;
+
+            marker_pub.publish(m);
         }
     }
 

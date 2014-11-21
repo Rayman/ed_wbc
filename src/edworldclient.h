@@ -9,6 +9,7 @@
 
 #include <ed_wbc/ed_client.h>
 #include <ros/rate.h>
+#include <ros/node_handle.h>
 
 namespace wbc {
 
@@ -46,6 +47,9 @@ class EdWorldClient : public WorldClient
     /** connection to ed **/
     ed_wbc::EdClient client_;
 
+    /** visualization of the collision world **/
+    ros::NodeHandle private_nh_;
+    ros::Publisher marker_pub;
 };
 
 } // namespace

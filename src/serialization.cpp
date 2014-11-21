@@ -62,16 +62,25 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
         // Add the id of the entity to the response
         output << e->id();
 
+        // serialize the pose
+        const geo::Pose3D pose = e->pose();
+        output << (float) pose.t.x;
+        output << (float) pose.t.y;
+        output << (float) pose.t.z;
+        for (int i = 0; i < 9; i++) {
+            output << (float) pose.R.m[i];
+        }
+
         serialization::serialize(*shape, output);
     }
 }
 
-boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive &input)
+boost::shared_ptr<fcl::CollisionGeometry> deserialize(tue::serialization::Archive &input)
 {
     std::vector<fcl::Vec3f>    vertices;
     std::vector<fcl::Triangle> triangles;
 
-    // - get the number of vertices, and content of these vertices
+    // get the number of vertices, and content of these vertices
     int num_vertices;
     input >> num_vertices;
     vertices.reserve(num_vertices);
@@ -82,7 +91,7 @@ boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive 
         vertices.push_back(fcl::Vec3f(x, y, z));
     }
 
-    // - get the number of triangles, and content of these triangles
+    // get the number of triangles, and content of these triangles
     int num_triangles;
     input >> num_triangles;
     triangles.reserve(num_triangles);
@@ -98,31 +107,32 @@ boost::shared_ptr<fcl::CollisionObject> deserialize(tue::serialization::Archive 
     model->addSubModel(vertices, triangles);
     model->endModel();
 
-//    std::cout << "      " << num_vertices << " vertices" << std::endl;
-//    std::cout << "      " << num_triangles << " triangles" << std::endl;
-
-    boost::shared_ptr<fcl::CollisionGeometry> geom(model);
-
-    return boost::shared_ptr<fcl::CollisionObject>(new fcl::CollisionObject(geom));
+    return boost::shared_ptr<fcl::CollisionGeometry>(model);
 }
 
 void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector<WorldCollisionObject> &world)
 {
-    // Get the number of shapes
     int num_shapes;
     input >> num_shapes;
 
-//    std::cout << num_shapes << " shapes" << std::endl;
     for(int i = 0; i < num_shapes; ++i)
     {
-        // For each shape:
-        // - get the entitiy id
         std::string entity_id;
         input >> entity_id;
 
-//        std::cout << "  - " << entity_id << ":" << std::endl;
+        // deserialize the pose
 
-        boost::shared_ptr<fcl::CollisionObject> obj = ed_wbc::serialization::deserialize(input);
+        float x, y, z;
+        input >> x >> y >> z;
+        fcl::Vec3f T(x, y, z);
+
+        float xx, xy, xz, yx, yy, yz, zx, zy, zz;
+        input >> xx >> xy >> xz >> yx >> yy >> yz >> zx >> zy >> zz;
+        fcl::Matrix3f R(xx, xy, xz, yx, yy, yz, zx, zy, zz);
+
+        boost::shared_ptr<fcl::CollisionGeometry> geom = ed_wbc::serialization::deserialize(input);
+        boost::shared_ptr<fcl::CollisionObject> obj(new fcl::CollisionObject(geom, R, T));
+
         world.push_back(obj);
     }
 }

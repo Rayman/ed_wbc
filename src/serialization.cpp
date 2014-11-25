@@ -41,7 +41,7 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
     std::vector<ed::EntityConstPtr> shape_entities;
     for(ed::WorldModel::const_iterator it = world.begin(); it != world.end(); ++it)
     {
-        const ed::EntityConstPtr& e = it->second;
+        const ed::EntityConstPtr& e = *it;
 
         if (!e.get()) {
             ROS_WARN("NULL entity found");

@@ -18,25 +18,6 @@
     <!-- Localization -->
     <include file="$(find amigo_launch_files)/launch/middleware/localization.launch" />
 
-    <!-- Navigation - local planner -->
-    <node pkg="cb_base_navigation" type="cb_base_navigation_local_planner_interface" name="local_planner_interface" ns="cb_base_navigation" output="screen">
-        <!-- Local Planner Settings -->
-        <rosparam file="$(find amigo_parameters)/parameters/navigation/local_planner.yaml" command="load" />
-        <!-- Local Costmap Settings -->
-        <rosparam file="$(find amigo_parameters)/parameters/navigation/local_costmap.yaml" command="load" ns="local_costmap" />
-        <!-- Topic remapping -->
-        <remap from="odom" to="/amigo/base/measurements" />
-        <remap from="cmd_vel" to="/amigo/base/references" />
-    </node>
-
-    <!-- Navigation - global planner -->
-    <node pkg="cb_base_navigation" type="cb_base_navigation_global_planner_interface" name="global_planner_interface" ns="cb_base_navigation" output="screen">
-        <!-- Global Planner Settings -->
-        <rosparam file="$(find amigo_parameters)/parameters/navigation/global_planner.yaml" command="load" />
-        <!-- Global Costmap Settings -->
-        <rosparam file="$(find amigo_parameters)/parameters/navigation/global_costmap.yaml" command="load" ns="global_costmap" />
-    </node>
-
     <!-- Head movement -->
 	<include file="$(find head_ref)/launch/head_ref.launch" />
     <node name="head_ref_ed_client" pkg="head_ref_ed_client" type="head_ref_ed_client" output="screen" />

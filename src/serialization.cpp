@@ -60,7 +60,7 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
         geo::ShapeConstPtr shape = e->shape();
 
         // Add the id of the entity to the response
-        output << e->id();
+        output << e->id().str();
 
         // serialize the pose
         const geo::Pose3D pose = e->pose();

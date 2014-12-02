@@ -4,6 +4,8 @@
 #include <ed/entity.h>
 #include <fcl/BVH/BVH_model.h>
 
+#include <ros/console.h>
+
 namespace ed_wbc {
 
 
@@ -41,7 +43,7 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
     std::vector<ed::EntityConstPtr> shape_entities;
     for(ed::WorldModel::const_iterator it = world.begin(); it != world.end(); ++it)
     {
-        const ed::EntityConstPtr& e = it->second;
+        const ed::EntityConstPtr& e = *it;
 
         if (!e.get()) {
             ROS_WARN("NULL entity found");
@@ -60,7 +62,7 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
         geo::ShapeConstPtr shape = e->shape();
 
         // Add the id of the entity to the response
-        output << e->id();
+        output << e->id().str();
 
         // serialize the pose
         const geo::Pose3D pose = e->pose();

@@ -4,6 +4,8 @@
 #include <ed/entity.h>
 #include <fcl/BVH/BVH_model.h>
 
+#include <ros/console.h>
+
 namespace ed_wbc {
 
 

@@ -9,8 +9,6 @@ namespace wbc {
 class EdWorld : public World
 {
   public:
-    EdWorld();
-
     /**
      * @brief Initialize world with a set of collision objects
      *

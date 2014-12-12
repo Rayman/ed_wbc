@@ -2,10 +2,6 @@
 
 namespace wbc {
 
-EdWorld::EdWorld()
-{
-}
-
 EdWorld::EdWorld(std::vector< boost::shared_ptr<fcl::CollisionObject> > objects)
     : objects_(objects)
 {

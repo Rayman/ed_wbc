@@ -47,7 +47,7 @@ void EdWorldClient::update()
         return;
     }
 
-    ROS_INFO("ed world update: %lu entities", objects.size());
+    ROS_DEBUG("ed world update: %lu entities", objects.size());
 
     // visualize the collision world
     if (marker_pub.getNumSubscribers() > 0) {

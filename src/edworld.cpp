@@ -5,11 +5,16 @@ namespace wbc {
 EdWorld::EdWorld(std::vector< boost::shared_ptr<fcl::CollisionObject> > objects)
     : objects_(objects)
 {
+    // convert to an array of pointers so it can be fed to registerObjects
+    std::vector<fcl::CollisionObject *> object_ptrs;
     for (std::vector< boost::shared_ptr<fcl::CollisionObject> >::iterator it = objects.begin(); it != objects.end(); ++it) {
-        manager_.registerObject(it->get());
+        object_ptrs.push_back(it->get());
     }
 
-    manager_.setup();
+    manager_.registerObjects(object_ptrs);
+
+    // don't call update() here or else the BVH will be broken
+    //   - Ramon (fcl bug?)
 }
 
 fcl::BroadPhaseCollisionManager* EdWorld::getCollisionManager()

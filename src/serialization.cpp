@@ -108,6 +108,7 @@ boost::shared_ptr<fcl::CollisionGeometry> deserialize(tue::serialization::Archiv
     model->beginModel();
     model->addSubModel(vertices, triangles);
     model->endModel();
+    model->computeLocalAABB();
 
     return boost::shared_ptr<fcl::CollisionGeometry>(model);
 }

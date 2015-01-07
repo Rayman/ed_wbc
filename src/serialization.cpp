@@ -4,6 +4,8 @@
 #include <ed/entity.h>
 #include <fcl/BVH/BVH_model.h>
 
+#include <ed/world_model/transform_crawler.h>
+
 #include <ros/console.h>
 
 namespace ed_wbc {
@@ -39,33 +41,30 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
 {
     using namespace ed_wbc;
 
-    // Loop over all world entities and find entities that have a shape
+    // Loop over all world entities and find entities that have a shape with their pose relative to MAP
     std::vector<ed::EntityConstPtr> shape_entities;
-    for(ed::WorldModel::const_iterator it = world.begin(); it != world.end(); ++it)
+    std::vector<geo::Pose3D> entity_poses;
+    for(ed::world_model::TransformCrawler tc(world, "map", world.latestTime()); tc.hasNext(); tc.next())
     {
-        const ed::EntityConstPtr& e = *it;
-
-        if (!e.get()) {
-            ROS_WARN("NULL entity found");
-            continue;
+        if (tc.entity()->shape())
+        {
+            shape_entities.push_back(tc.entity());
+            entity_poses.push_back(tc.transform());
         }
-
-        if (e->shape())
-            shape_entities.push_back(e);
     }
 
     // Add the number of entities to the response
     output << (int)shape_entities.size();
-    for(std::vector<ed::EntityConstPtr>::const_iterator it = shape_entities.begin(); it != shape_entities.end(); ++it)
+    for(unsigned int i = 0; i < shape_entities.size(); ++i)
     {
-        const ed::EntityConstPtr& e = *it;
+        const ed::EntityConstPtr& e = shape_entities[i];
         geo::ShapeConstPtr shape = e->shape();
 
         // Add the id of the entity to the response
         output << e->id().str();
 
         // serialize the pose
-        const geo::Pose3D pose = e->pose();
+        const geo::Pose3D& pose = entity_poses[i];
         output << (float) pose.t.x;
         output << (float) pose.t.y;
         output << (float) pose.t.z;

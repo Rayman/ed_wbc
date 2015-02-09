@@ -29,7 +29,10 @@
     <!--<include file="$(find amigo_launch_files)/launch/manipulation/manipulation.launch" />-->
 
 	<!-- Gripper -->
-	<include file="$(find amigo_launch_files)/launch/manipulation/grippers.launch" />
+    <arg name="machine" value="$(optenv MACHINE_ARM_NAVIGATION localhost)"/>
+    <include file="$(find amigo_launch_files)/launch/manipulation/grippers.launch">
+        <arg name="machine" value="$(arg machine)"/>
+    </include>
 
     <!-- RGBD (Kinect) server -->
     <include file="$(find amigo_launch_files)/launch/sensors/top_kinect_rgbd.launch" />

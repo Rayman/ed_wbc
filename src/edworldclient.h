@@ -27,6 +27,8 @@ class EdWorldClient : public WorldClient
     /** get a fast copy of the current state of the world **/
     boost::shared_ptr<World> getWorld();
 
+    void setIgnoredEntities(std::vector<std::string> entities);
+
   protected:
 
     ros::Rate rate_;
@@ -40,6 +42,8 @@ class EdWorldClient : public WorldClient
     boost::thread thread_;
 
     boost::mutex mutex_;
+
+    std::vector<std::string> ignored_entities;
 
     /** cached state of the world **/
     boost::shared_ptr< EdWorld > world_;

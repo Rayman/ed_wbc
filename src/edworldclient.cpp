@@ -39,6 +39,12 @@ boost::shared_ptr<World> EdWorldClient::getWorld()
     return world_;
 }
 
+void EdWorldClient::setIgnoredEntities(std::vector<std::string> entities)
+{
+    boost::lock_guard<boost::mutex> lock(mutex_);
+    ignored_entities = entities;
+}
+
 void EdWorldClient::update()
 {
     std::vector< ed_wbc::CollisionObjectPtr > objects;
@@ -49,8 +55,14 @@ void EdWorldClient::update()
         return;
     }
 
-    for (ed_wbc::CollisionObjectPtrMap::iterator it = object_map.begin(); it != object_map.end(); ++it) {
-        objects.push_back(it->second);
+    {
+        boost::lock_guard<boost::mutex> lock(mutex_);
+        for (ed_wbc::CollisionObjectPtrMap::iterator it = object_map.begin(); it != object_map.end(); ++it) {
+            // if the entityId is not ignored, process it
+            if (std::find(ignored_entities.begin(), ignored_entities.end(), it->first) == ignored_entities.end()) {
+                objects.push_back(it->second);
+            }
+        }
     }
 
     ROS_DEBUG("ed world update: %lu entities", objects.size());

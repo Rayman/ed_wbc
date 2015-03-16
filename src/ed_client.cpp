@@ -13,7 +13,7 @@ void EdClient::initialize()
     client_.launchProbe("wbc_probe", "libwbc_probe.so");
 }
 
-bool EdClient::getWorld(std::vector< CollisionObjectPtr > &world)
+bool EdClient::getWorld(CollisionObjectPtrMap &world)
 {
     // We do not have a specific request (just want to get all entity shapes), so leave request empty
     tue::serialization::Archive req;

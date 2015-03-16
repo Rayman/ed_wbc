@@ -42,9 +42,15 @@ boost::shared_ptr<World> EdWorldClient::getWorld()
 void EdWorldClient::update()
 {
     std::vector< ed_wbc::CollisionObjectPtr > objects;
-    if (!client_.getWorld(objects)) {
+    ed_wbc::CollisionObjectPtrMap object_map;
+
+    if (!client_.getWorld(object_map)) {
         ROS_ERROR("probe processing failed");
         return;
+    }
+
+    for (ed_wbc::CollisionObjectPtrMap::iterator it = object_map.begin(); it != object_map.end(); ++it) {
+        objects.push_back(it->second);
     }
 
     ROS_DEBUG("ed world update: %lu entities", objects.size());

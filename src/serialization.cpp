@@ -113,7 +113,7 @@ boost::shared_ptr<fcl::CollisionGeometry> deserialize(tue::serialization::Archiv
     return boost::shared_ptr<fcl::CollisionGeometry>(model);
 }
 
-void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector<WorldCollisionObject> &world)
+void deserializeCollisionWorld(tue::serialization::Archive &input, CollisionObjectPtrMap &world)
 {
     int num_shapes;
     input >> num_shapes;
@@ -136,7 +136,12 @@ void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector<W
         boost::shared_ptr<fcl::CollisionGeometry> geom = ed_wbc::serialization::deserialize(input);
         boost::shared_ptr<fcl::CollisionObject> obj(new fcl::CollisionObject(geom, R, T));
 
-        world.push_back(obj);
+        std::pair< ed_wbc::CollisionObjectPtrMap::iterator, bool > ret;
+        ret = world.insert(std::pair<std::string, ed_wbc::CollisionObjectPtr>(entity_id, obj));
+
+        if (ret.second == false) {
+            ROS_WARN("duplicate entity id found: %s", entity_id.c_str());
+        }
     }
 }
 

@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
         {
             using namespace ed_wbc;
 
-            std::vector< boost::shared_ptr<fcl::CollisionObject> > world;
+            ed_wbc::CollisionObjectPtrMap world;
             serialization::deserializeCollisionWorld(res, world);
         }
         else

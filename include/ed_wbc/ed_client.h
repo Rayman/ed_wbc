@@ -8,6 +8,8 @@ namespace ed_wbc {
 
 typedef boost::shared_ptr< fcl::CollisionObject > CollisionObjectPtr;
 
+typedef std::map< std::string, CollisionObjectPtr > CollisionObjectPtrMap;
+
 class EdClient
 {
     ed::ProbeClient client_;
@@ -17,7 +19,7 @@ public:
 
     void initialize();
 
-    bool getWorld(std::vector< CollisionObjectPtr > &world);
+    bool getWorld(CollisionObjectPtrMap &world);
 };
 
 

@@ -10,15 +10,12 @@
 #include <ed/world_model.h>
 
 #include <fcl/collision_object.h>
+#include <ed_wbc/ed_client.h>
 
 namespace ed_wbc {
 
 
 namespace serialization {
-
-typedef boost::shared_ptr<fcl::CollisionObject> WorldCollisionObject;
-
-
 
 void serialize(const geo::Shape& shape, tue::serialization::OutputArchive &output);
 
@@ -26,7 +23,7 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
 
 boost::shared_ptr<fcl::CollisionGeometry> deserialize(tue::serialization::Archive &input);
 
-void deserializeCollisionWorld(tue::serialization::Archive &input, std::vector<WorldCollisionObject> &world);
+void deserializeCollisionWorld(tue::serialization::Archive &input, ed_wbc::CollisionObjectPtrMap &world);
 
 }
 

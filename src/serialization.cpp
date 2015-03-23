@@ -50,7 +50,7 @@ void serializeCollisionWorld(const ed::WorldModel& world, tue::serialization::Ou
             continue;
         }
 
-        if (e->shape())
+        if (e->shape() && e->has_pose())
             shape_entities.push_back(e);
     }
 
